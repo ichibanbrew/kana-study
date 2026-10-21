@@ -258,6 +258,21 @@ body {
   background: var(--accent-hover);
 }
 
+.mistakes-badge {
+  background: var(--error-border);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-full);
+  line-height: 1.1;
+}
+
+.header-row-count {
+  opacity: 0.85;
+  font-size: 0.8rem;
+}
+
 /* App Container */
 .app-container {
   max-width: 640px;
@@ -754,12 +769,12 @@ body {
 /* Responsive queries */
 @media (max-width: 600px) {
   .app-header {
-    padding: 0.55rem 0.75rem;
-    gap: 0.5rem;
+    padding: 0.5rem 0.5rem;
+    gap: 0.35rem;
   }
 
   .brand {
-    gap: 0.45rem;
+    gap: 0.35rem;
   }
 
   .desktop-brand-title,
@@ -767,23 +782,45 @@ body {
     display: none;
   }
 
+  .script-name-full {
+    display: none;
+  }
+
+  .script-name-short {
+    display: inline;
+  }
+
+  .script-switcher {
+    padding: 0.14rem;
+    gap: 0.1rem;
+  }
+
   .script-tab {
-    padding: 0.25rem 0.55rem;
-    font-size: 0.78rem;
-    gap: 0.25rem;
+    padding: 0.25rem 0.48rem;
+    font-size: 0.75rem;
+    gap: 0.2rem;
   }
 
   .header-controls {
-    gap: 0.35rem;
+    gap: 0.3rem;
+  }
+
+  .btn-pill {
+    gap: 0.25rem;
   }
 
   /* Compact Mistakes Button: icon + count badge */
   #btn-open-mistakes {
-    padding: 0.4rem 0.55rem;
+    padding: 0.35rem 0.48rem;
   }
 
   #btn-open-mistakes .btn-text-part {
     display: none;
+  }
+
+  .mistakes-badge {
+    font-size: 0.65rem;
+    padding: 0.08rem 0.32rem;
   }
 
   /* Compact Filter Rows Button */
@@ -796,15 +833,19 @@ body {
   }
 
   #btn-open-rows {
-    padding: 0.4rem 0.65rem;
-    font-size: 0.8rem;
+    padding: 0.35rem 0.52rem;
+    font-size: 0.76rem;
+  }
+
+  .header-row-count {
+    font-size: 0.74rem;
   }
 
   /* Compact Theme Switch button */
   #btn-toggle-theme {
-    width: 36px;
-    height: 36px;
-    font-size: 0.95rem;
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
     flex-shrink: 0;
   }
 
@@ -876,23 +917,15 @@ body {
   }
 }
 
-/* Ultra-narrow devices (<= 380px) */
-@media (max-width: 380px) {
+/* Ultra-narrow devices (<= 360px) */
+@media (max-width: 360px) {
   .app-header {
-    padding: 0.45rem 0.45rem;
-  }
-
-  .script-name-full {
-    display: none;
-  }
-
-  .script-name-short {
-    display: inline;
+    padding: 0.45rem 0.4rem;
   }
 
   .script-tab {
-    padding: 0.22rem 0.45rem;
-    font-size: 0.74rem;
+    padding: 0.22rem 0.42rem;
+    font-size: 0.72rem;
   }
 
   .btn-text-part-mobile {
@@ -900,12 +933,12 @@ body {
   }
 
   #btn-open-rows {
-    padding: 0.35rem 0.45rem;
-    font-size: 0.75rem;
+    padding: 0.32rem 0.45rem;
+    font-size: 0.74rem;
   }
 
   #btn-open-mistakes {
-    padding: 0.35rem 0.45rem;
+    padding: 0.32rem 0.42rem;
   }
 
   #btn-toggle-theme {
