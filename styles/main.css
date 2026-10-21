@@ -451,11 +451,13 @@ body {
   outline: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .option-btn:hover:not(:disabled) {
+  html:not([data-touch="true"]) .option-btn:hover:not(:disabled) {
     background: var(--bg-hover);
     border-color: var(--accent-primary);
     transform: translateY(-2px);
@@ -467,9 +469,19 @@ body {
   transform: translateY(1px);
 }
 
-.option-btn:focus-visible {
+html:not([data-touch="true"]) .option-btn:focus-visible {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35);
+}
+
+html[data-touch="true"] .option-btn:not(.correct):not(.incorrect),
+html[data-touch="true"] .option-btn:not(.correct):not(.incorrect):hover,
+html[data-touch="true"] .option-btn:not(.correct):not(.incorrect):focus,
+html[data-touch="true"] .option-btn:not(.correct):not(.incorrect):focus-visible {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+  transform: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .option-text {

@@ -66,6 +66,9 @@ export class QuizUI {
   }
 
   init() {
+    if (typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+      document.documentElement.setAttribute('data-touch', 'true');
+    }
     this.setupTheme();
     this.updateScriptUI();
     this.setupEventListeners();
@@ -282,6 +285,7 @@ export class QuizUI {
 
     question.options.forEach((optRomaji, index) => {
       const btn = document.createElement('button');
+      btn.type = 'button';
       btn.className = 'option-btn';
       btn.dataset.index = index;
       btn.dataset.romaji = optRomaji;
