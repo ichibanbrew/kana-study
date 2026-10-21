@@ -271,6 +271,9 @@ export class QuizUI {
    * Render question card and 5 options
    */
   renderQuestion(question) {
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     this.elements.cardKanaDisplay.textContent = question.target.kana;
     this.elements.cardRowBadge.textContent = `${question.target.rowName}`;
     this.elements.cardRowBadge.style.display = stateManager.state.settings.showRowHint ? 'inline-block' : 'none';
@@ -313,6 +316,7 @@ export class QuizUI {
     if (!selectedBtn) return;
 
     this.isAnswering = true;
+    selectedBtn.blur();
     const chosenRomaji = selectedBtn.dataset.romaji;
     const evaluation = evaluateAnswer(this.currentQuestion, chosenRomaji);
 

@@ -168,10 +168,13 @@ body {
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.script-tab:hover:not(.active) {
-  color: var(--text-primary);
+@media (hover: hover) and (pointer: fine) {
+  .script-tab:hover:not(.active) {
+    color: var(--text-primary);
+  }
 }
 
 .script-tab.active {
@@ -220,12 +223,15 @@ body {
   cursor: pointer;
   transition: all var(--transition-fast);
   font-size: 1.1rem;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-icon:hover {
-  background: var(--bg-hover);
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
+@media (hover: hover) and (pointer: fine) {
+  .btn-icon:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
 }
 
 .btn-pill {
@@ -241,11 +247,14 @@ body {
   gap: 0.45rem;
   cursor: pointer;
   transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-pill:hover {
-  background: var(--bg-hover);
-  border-color: var(--accent-primary);
+@media (hover: hover) and (pointer: fine) {
+  .btn-pill:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-primary);
+  }
 }
 
 .btn-pill.primary {
@@ -254,8 +263,10 @@ body {
   color: #ffffff;
 }
 
-.btn-pill.primary:hover {
-  background: var(--accent-hover);
+@media (hover: hover) and (pointer: fine) {
+  .btn-pill.primary:hover {
+    background: var(--accent-hover);
+  }
 }
 
 .mistakes-badge {
@@ -385,9 +396,11 @@ body {
   margin-left: auto;
 }
 
-.audio-btn:hover {
-  color: var(--accent-primary);
-  transform: scale(1.1);
+@media (hover: hover) and (pointer: fine) {
+  .audio-btn:hover {
+    color: var(--accent-primary);
+    transform: scale(1.1);
+  }
 }
 
 .kana-display {
@@ -401,8 +414,10 @@ body {
   transition: transform 0.2s ease;
 }
 
-.character-card:hover .kana-display {
-  transform: scale(1.02);
+@media (hover: hover) and (pointer: fine) {
+  .character-card:hover .kana-display {
+    transform: scale(1.02);
+  }
 }
 
 .prompt-hint {
@@ -435,14 +450,17 @@ body {
   transition: all var(--transition-fast);
   outline: none;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
   width: 100%;
 }
 
-.option-btn:hover:not(:disabled) {
-  background: var(--bg-hover);
-  border-color: var(--accent-primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+@media (hover: hover) and (pointer: fine) {
+  .option-btn:hover:not(:disabled) {
+    background: var(--bg-hover);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
 }
 
 .option-btn:active:not(:disabled) {
@@ -657,9 +675,11 @@ body {
   position: relative;
 }
 
-.row-card:hover {
-  background: var(--bg-hover);
-  border-color: var(--accent-primary);
+@media (hover: hover) and (pointer: fine) {
+  .row-card:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-primary);
+  }
 }
 
 .row-card.selected {
