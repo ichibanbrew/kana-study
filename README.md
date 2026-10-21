@@ -1,11 +1,12 @@
-# Japanese Hiragana Study Web App
+# Japanese Kana Study Web App (Hiragana & Katakana)
 
-An interactive, responsive web application for studying Japanese Hiragana with custom row filtering, 5-choice multiple choice quizzes, audio pronunciation, and persistent statistics.
+An interactive, responsive web application for studying Japanese **Hiragana** and **Katakana** with custom row filtering, 5-choice multiple choice quizzes, audio pronunciation, and persistent statistics.
 
 ## ✨ Features
 
-- **5-Choice Multiple Choice Quizzes**: For each displayed Hiragana character, choose the correct reading out of 5 options. Smart distractor selection guarantees 5 unique choices even if practicing small character pools (such as the Ya-row).
-- **Customizable Row Selection**: Practice specific Hiragana sets:
+- **Hiragana & Katakana Support**: Instant header switcher (`あ Hiragana | ア Katakana`) with independent row selection state remembered per script.
+- **5-Choice Multiple Choice Quizzes**: For each displayed Kana character, choose the correct reading out of 5 options. Smart distractor selection guarantees 5 unique choices even if practicing small character pools (such as the Ya-row).
+- **Customizable Row Selection**: Practice specific Hiragana or Katakana sets:
   - **Basic Gojūon (46 characters)**: A, Ka, Sa, Ta, Na, Ha, Ma, Ya, Ra, Wa rows.
   - **Dakuten (Voiced - 20 characters)**: Ga, Za, Da, Ba rows.
   - **Handakuten (Semi-voiced - 5 characters)**: Pa row.

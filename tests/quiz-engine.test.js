@@ -2,16 +2,18 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   HIRAGANA_ROWS,
+  KATAKANA_ROWS,
   HIRAGANA_CATEGORIES,
   getAllCharacters,
   getBasicRowIds,
-  getCharactersByRowIds
+  getCharactersByRowIds,
+  getRowsByScript
 } from '../src/data/hiragana.js';
 import { generateQuestion, evaluateAnswer } from '../src/quiz-engine.js';
 
 test('Hiragana dataset completeness and structure', () => {
   assert.ok(Array.isArray(HIRAGANA_ROWS));
-  assert.ok(HIRAGANA_ROWS.length >= 10);
+  assert.equal(HIRAGANA_ROWS.length, 26, 'Should have 26 total Hiragana rows');
 
   const basicIds = getBasicRowIds();
   assert.equal(basicIds.length, 10, 'Should have 10 basic Gojūon rows (a, ka, sa, ta, na, ha, ma, ya, ra, wa)');
@@ -20,7 +22,7 @@ test('Hiragana dataset completeness and structure', () => {
   assert.equal(basicChars.length, 46, 'Basic Gojūon should contain exactly 46 characters');
 
   const allChars = getAllCharacters();
-  assert.ok(allChars.length >= 71, 'Total characters including dakuten/handakuten should be at least 71');
+  assert.equal(allChars.length, 104, 'Total Hiragana characters should be 104');
 
   allChars.forEach(char => {
     assert.ok(char.kana, 'Character must have kana');
@@ -28,6 +30,40 @@ test('Hiragana dataset completeness and structure', () => {
     assert.ok(char.rowId, 'Character must have rowId');
     assert.ok(char.category, 'Character must have category');
   });
+});
+
+test('Katakana dataset completeness and structure', () => {
+  assert.ok(Array.isArray(KATAKANA_ROWS));
+  assert.equal(KATAKANA_ROWS.length, 26, 'Should have 26 total Katakana rows');
+  assert.deepEqual(getRowsByScript('katakana'), KATAKANA_ROWS);
+  assert.deepEqual(getRowsByScript('hiragana'), HIRAGANA_ROWS);
+
+  const basicIds = getBasicRowIds();
+  const basicKataChars = getCharactersByRowIds(basicIds, 'katakana');
+  assert.equal(basicKataChars.length, 46, 'Basic Katakana Gojūon should contain exactly 46 characters');
+  assert.equal(basicKataChars[0].kana, 'ア');
+  assert.equal(basicKataChars[0].romaji, 'a');
+
+  const allKataChars = getAllCharacters('katakana');
+  assert.equal(allKataChars.length, 104, 'Total Katakana characters should be 104');
+
+  allKataChars.forEach(char => {
+    assert.ok(char.kana, 'Character must have kana');
+    assert.ok(char.romaji, 'Character must have romaji');
+    assert.ok(char.rowId, 'Character must have rowId');
+    assert.ok(char.category, 'Character must have category');
+  });
+});
+
+test('generateQuestion generates Katakana questions when script is katakana', () => {
+  const yaRowIds = ['ya'];
+  for (let i = 0; i < 20; i++) {
+    const q = generateQuestion(yaRowIds, null, 'katakana');
+    assert.ok(['ヤ', 'ユ', 'ヨ'].includes(q.target.kana), 'Target must be Katakana from Ya-row');
+    assert.equal(q.options.length, 5, 'Must provide 5 options');
+    assert.equal(new Set(q.options).size, 5, 'All 5 options must be unique');
+    assert.equal(q.options[q.correctIndex], q.target.romaji);
+  }
 });
 
 test('generateQuestion generates 5 unique options with correct answer included', () => {

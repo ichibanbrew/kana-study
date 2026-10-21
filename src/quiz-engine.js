@@ -18,13 +18,15 @@ export function shuffle(array) {
  *
  * @param {string[]|Set<string>} selectedRowIds - IDs of rows selected by user
  * @param {string|null} previousKana - Kana of the last question to prevent immediate repetition
+ * @param {'hiragana'|'katakana'} script - Active script ('hiragana' or 'katakana')
  * @returns {object} Question object containing target character, 5 options, and correct index
  */
-export function generateQuestion(selectedRowIds, previousKana = null) {
-  const activePool = getCharactersByRowIds(selectedRowIds);
+export function generateQuestion(selectedRowIds, previousKana = null, script = 'hiragana') {
+  const activePool = getCharactersByRowIds(selectedRowIds, script);
 
   if (!activePool || activePool.length === 0) {
-    throw new Error('Cannot generate question: No Hiragana characters available for the selected rows.');
+    const scriptLabel = script === 'katakana' ? 'Katakana' : 'Hiragana';
+    throw new Error(`Cannot generate question: No ${scriptLabel} characters available for the selected rows.`);
   }
 
   // Pick target character. Avoid repeating immediately if pool has more than 1 character.
@@ -60,7 +62,7 @@ export function generateQuestion(selectedRowIds, previousKana = null) {
 
   // If pool has fewer than 4 distractors, supplement from global characters
   if (chosenDistractors.length < 4) {
-    const allChars = getAllCharacters();
+    const allChars = getAllCharacters(script);
     const globalDistractors = allChars
       .filter(c => c.romaji !== targetRomaji && !chosenDistractors.includes(c.romaji))
       .map(c => c.romaji);

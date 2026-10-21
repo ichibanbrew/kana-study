@@ -1,8 +1,8 @@
 import {
-  HIRAGANA_ROWS,
   HIRAGANA_CATEGORIES,
   getBasicRowIds,
-  getCharactersByRowIds
+  getCharactersByRowIds,
+  getRowsByScript
 } from './data/hiragana.js';
 import { generateQuestion, evaluateAnswer } from './quiz-engine.js';
 import { stateManager } from './state.js';
@@ -16,6 +16,9 @@ export class QuizUI {
 
     // Cache DOM elements
     this.elements = {
+      brandIcon: document.getElementById('brand-icon'),
+      btnScriptHiragana: document.getElementById('btn-script-hiragana'),
+      btnScriptKatakana: document.getElementById('btn-script-katakana'),
       cardKanaDisplay: document.getElementById('card-kana-display'),
       cardRowBadge: document.getElementById('card-row-badge'),
       btnAudioSpeak: document.getElementById('btn-audio-speak'),
@@ -35,6 +38,7 @@ export class QuizUI {
 
       // Row Selection Modal
       rowsModal: document.getElementById('rows-modal'),
+      modalRowsTitle: document.getElementById('modal-rows-title'),
       btnOpenRows: document.getElementById('btn-open-rows'),
       btnCloseRowsModal: document.getElementById('btn-close-rows-modal'),
       btnApplyRows: document.getElementById('btn-apply-rows'),
@@ -63,6 +67,7 @@ export class QuizUI {
 
   init() {
     this.setupTheme();
+    this.updateScriptUI();
     this.setupEventListeners();
     this.renderStats();
     this.updateHeaderRowCount();
@@ -71,10 +76,40 @@ export class QuizUI {
 
     // Subscribe to state changes
     stateManager.subscribe(() => {
+      this.updateScriptUI();
       this.renderStats();
       this.updateHeaderRowCount();
       this.updateMistakesBadge();
     });
+  }
+
+  updateScriptUI() {
+    const script = stateManager.getScript();
+    const isKatakana = script === 'katakana';
+
+    if (this.elements.brandIcon) {
+      this.elements.brandIcon.textContent = isKatakana ? 'ア' : 'あ';
+    }
+
+    if (this.elements.btnScriptHiragana && this.elements.btnScriptKatakana) {
+      this.elements.btnScriptHiragana.classList.toggle('active', !isKatakana);
+      this.elements.btnScriptHiragana.setAttribute('aria-pressed', String(!isKatakana));
+      this.elements.btnScriptKatakana.classList.toggle('active', isKatakana);
+      this.elements.btnScriptKatakana.setAttribute('aria-pressed', String(isKatakana));
+    }
+
+    if (this.elements.modalRowsTitle) {
+      this.elements.modalRowsTitle.textContent = isKatakana ? 'Select Katakana Rows' : 'Select Hiragana Rows';
+    }
+  }
+
+  switchScript(script) {
+    if (stateManager.getScript() === script) return;
+    stateManager.setScript(script);
+    this.modalSelectedRowIds = new Set(stateManager.getSelectedRowIds());
+    this.updateScriptUI();
+    this.buildCategoriesModal();
+    this.nextQuestion();
   }
 
   setupTheme() {
@@ -84,6 +119,14 @@ export class QuizUI {
   }
 
   setupEventListeners() {
+    // Script switcher tabs (Hiragana / Katakana)
+    if (this.elements.btnScriptHiragana) {
+      this.elements.btnScriptHiragana.addEventListener('click', () => this.switchScript('hiragana'));
+    }
+    if (this.elements.btnScriptKatakana) {
+      this.elements.btnScriptKatakana.addEventListener('click', () => this.switchScript('katakana'));
+    }
+
     // Theme toggle
     this.elements.btnToggleTheme.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme');
@@ -157,7 +200,8 @@ export class QuizUI {
     });
 
     this.elements.btnSelectAll.addEventListener('click', () => {
-      this.modalSelectedRowIds = new Set(HIRAGANA_ROWS.map(r => r.id));
+      const activeRows = getRowsByScript(stateManager.getScript());
+      this.modalSelectedRowIds = new Set(activeRows.map(r => r.id));
       this.syncModalCheckboxes();
     });
 
@@ -168,7 +212,8 @@ export class QuizUI {
 
     this.elements.btnApplyRows.addEventListener('click', () => {
       if (this.modalSelectedRowIds.size === 0) {
-        alert('Please select at least one Hiragana row to practice!');
+        const scriptName = stateManager.getScript() === 'katakana' ? 'Katakana' : 'Hiragana';
+        alert(`Please select at least one ${scriptName} row to practice!`);
         return;
       }
       stateManager.setSelectedRowIds(Array.from(this.modalSelectedRowIds));
@@ -214,7 +259,7 @@ export class QuizUI {
     const prevKana = this.currentQuestion ? this.currentQuestion.target.kana : null;
 
     try {
-      this.currentQuestion = generateQuestion(selectedRows, prevKana);
+      this.currentQuestion = generateQuestion(selectedRows, prevKana, stateManager.getScript());
       this.renderQuestion(this.currentQuestion);
     } catch (e) {
       console.error(e);
@@ -337,7 +382,8 @@ export class QuizUI {
    */
   updateHeaderRowCount() {
     const selectedIds = new Set(stateManager.getSelectedRowIds());
-    const selectedRows = HIRAGANA_ROWS.filter(r => selectedIds.has(r.id));
+    const activeRows = getRowsByScript(stateManager.getScript());
+    const selectedRows = activeRows.filter(r => selectedIds.has(r.id));
     this.elements.headerRowCount.textContent = `(${selectedRows.length})`;
   }
 
@@ -346,9 +392,10 @@ export class QuizUI {
    */
   buildCategoriesModal() {
     this.elements.categoriesContainer.innerHTML = '';
+    const activeRows = getRowsByScript(stateManager.getScript());
 
     HIRAGANA_CATEGORIES.forEach(cat => {
-      const rowsInCat = HIRAGANA_ROWS.filter(r => r.category === cat.id);
+      const rowsInCat = activeRows.filter(r => r.category === cat.id);
       if (rowsInCat.length === 0) return;
 
       const groupDiv = document.createElement('div');
@@ -422,7 +469,7 @@ export class QuizUI {
   }
 
   updateModalSelectionCount() {
-    const chars = getCharactersByRowIds(Array.from(this.modalSelectedRowIds));
+    const chars = getCharactersByRowIds(Array.from(this.modalSelectedRowIds), stateManager.getScript());
     const rowCount = this.modalSelectedRowIds.size;
 
     if (rowCount === 0) {
@@ -438,7 +485,7 @@ export class QuizUI {
 
   openRowsModal() {
     this.modalSelectedRowIds = new Set(stateManager.getSelectedRowIds());
-    this.syncModalCheckboxes();
+    this.buildCategoriesModal();
     this.elements.rowsModal.classList.add('open');
   }
 

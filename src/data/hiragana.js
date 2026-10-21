@@ -1,5 +1,5 @@
 /**
- * Japanese Hiragana Dataset
+ * Japanese Kana Dataset (Hiragana & Katakana)
  * Organized into categories: Basic (Gojūon), Dakuten (Voiced), Handakuten (Semi-voiced), and Yōon (Combinations).
  */
 
@@ -306,20 +306,333 @@ export const HIRAGANA_ROWS = [
   }
 ];
 
+export const KATAKANA_ROWS = [
+  // --- BASIC (46 CHARACTERS) ---
+  {
+    id: 'a',
+    name: 'A-row',
+    category: 'basic',
+    characters: [
+      { kana: 'ア', romaji: 'a' },
+      { kana: 'イ', romaji: 'i' },
+      { kana: 'ウ', romaji: 'u' },
+      { kana: 'エ', romaji: 'e' },
+      { kana: 'オ', romaji: 'o' }
+    ]
+  },
+  {
+    id: 'ka',
+    name: 'Ka-row',
+    category: 'basic',
+    characters: [
+      { kana: 'カ', romaji: 'ka' },
+      { kana: 'キ', romaji: 'ki' },
+      { kana: 'ク', romaji: 'ku' },
+      { kana: 'ケ', romaji: 'ke' },
+      { kana: 'コ', romaji: 'ko' }
+    ]
+  },
+  {
+    id: 'sa',
+    name: 'Sa-row',
+    category: 'basic',
+    characters: [
+      { kana: 'サ', romaji: 'sa' },
+      { kana: 'シ', romaji: 'shi' },
+      { kana: 'ス', romaji: 'su' },
+      { kana: 'セ', romaji: 'se' },
+      { kana: 'ソ', romaji: 'so' }
+    ]
+  },
+  {
+    id: 'ta',
+    name: 'Ta-row',
+    category: 'basic',
+    characters: [
+      { kana: 'タ', romaji: 'ta' },
+      { kana: 'チ', romaji: 'chi' },
+      { kana: 'ツ', romaji: 'tsu' },
+      { kana: 'テ', romaji: 'te' },
+      { kana: 'ト', romaji: 'to' }
+    ]
+  },
+  {
+    id: 'na',
+    name: 'Na-row',
+    category: 'basic',
+    characters: [
+      { kana: 'ナ', romaji: 'na' },
+      { kana: 'ニ', romaji: 'ni' },
+      { kana: 'ヌ', romaji: 'nu' },
+      { kana: 'ネ', romaji: 'ne' },
+      { kana: 'ノ', romaji: 'no' }
+    ]
+  },
+  {
+    id: 'ha',
+    name: 'Ha-row',
+    category: 'basic',
+    characters: [
+      { kana: 'ハ', romaji: 'ha' },
+      { kana: 'ヒ', romaji: 'hi' },
+      { kana: 'フ', romaji: 'fu' },
+      { kana: 'ヘ', romaji: 'he' },
+      { kana: 'ホ', romaji: 'ho' }
+    ]
+  },
+  {
+    id: 'ma',
+    name: 'Ma-row',
+    category: 'basic',
+    characters: [
+      { kana: 'マ', romaji: 'ma' },
+      { kana: 'ミ', romaji: 'mi' },
+      { kana: 'ム', romaji: 'mu' },
+      { kana: 'メ', romaji: 'me' },
+      { kana: 'モ', romaji: 'mo' }
+    ]
+  },
+  {
+    id: 'ya',
+    name: 'Ya-row',
+    category: 'basic',
+    characters: [
+      { kana: 'ヤ', romaji: 'ya' },
+      { kana: 'ユ', romaji: 'yu' },
+      { kana: 'ヨ', romaji: 'yo' }
+    ]
+  },
+  {
+    id: 'ra',
+    name: 'Ra-row',
+    category: 'basic',
+    characters: [
+      { kana: 'ラ', romaji: 'ra' },
+      { kana: 'リ', romaji: 'ri' },
+      { kana: 'ル', romaji: 'ru' },
+      { kana: 'レ', romaji: 're' },
+      { kana: 'ロ', romaji: 'ro' }
+    ]
+  },
+  {
+    id: 'wa',
+    name: 'Wa-row',
+    category: 'basic',
+    characters: [
+      { kana: 'ワ', romaji: 'wa' },
+      { kana: 'ヲ', romaji: 'wo' },
+      { kana: 'ン', romaji: 'n' }
+    ]
+  },
+
+  // --- DAKUTEN (VOICED) ---
+  {
+    id: 'ga',
+    name: 'Ga-row',
+    category: 'dakuten',
+    characters: [
+      { kana: 'ガ', romaji: 'ga' },
+      { kana: 'ギ', romaji: 'gi' },
+      { kana: 'グ', romaji: 'gu' },
+      { kana: 'ゲ', romaji: 'ge' },
+      { kana: 'ゴ', romaji: 'go' }
+    ]
+  },
+  {
+    id: 'za',
+    name: 'Za-row',
+    category: 'dakuten',
+    characters: [
+      { kana: 'ザ', romaji: 'za' },
+      { kana: 'ジ', romaji: 'ji' },
+      { kana: 'ズ', romaji: 'zu' },
+      { kana: 'ゼ', romaji: 'ze' },
+      { kana: 'ゾ', romaji: 'zo' }
+    ]
+  },
+  {
+    id: 'da',
+    name: 'Da-row',
+    category: 'dakuten',
+    characters: [
+      { kana: 'ダ', romaji: 'da' },
+      { kana: 'ヂ', romaji: 'ji (di)' },
+      { kana: 'ヅ', romaji: 'zu (du)' },
+      { kana: 'デ', romaji: 'de' },
+      { kana: 'ド', romaji: 'do' }
+    ]
+  },
+  {
+    id: 'ba',
+    name: 'Ba-row',
+    category: 'dakuten',
+    characters: [
+      { kana: 'バ', romaji: 'ba' },
+      { kana: 'ビ', romaji: 'bi' },
+      { kana: 'ブ', romaji: 'bu' },
+      { kana: 'ベ', romaji: 'be' },
+      { kana: 'ボ', romaji: 'bo' }
+    ]
+  },
+
+  // --- HANDAKUTEN (SEMI-VOICED) ---
+  {
+    id: 'pa',
+    name: 'Pa-row',
+    category: 'handakuten',
+    characters: [
+      { kana: 'パ', romaji: 'pa' },
+      { kana: 'ピ', romaji: 'pi' },
+      { kana: 'プ', romaji: 'pu' },
+      { kana: 'ペ', romaji: 'pe' },
+      { kana: 'ポ', romaji: 'po' }
+    ]
+  },
+
+  // --- YOON (COMBINATIONS) ---
+  {
+    id: 'kya',
+    name: 'Kya-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'キャ', romaji: 'kya' },
+      { kana: 'キュ', romaji: 'kyu' },
+      { kana: 'キョ', romaji: 'kyo' }
+    ]
+  },
+  {
+    id: 'sha',
+    name: 'Sha-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'シャ', romaji: 'sha' },
+      { kana: 'シュ', romaji: 'shu' },
+      { kana: 'ショ', romaji: 'sho' }
+    ]
+  },
+  {
+    id: 'cha',
+    name: 'Cha-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'チャ', romaji: 'cha' },
+      { kana: 'チュ', romaji: 'chu' },
+      { kana: 'チョ', romaji: 'cho' }
+    ]
+  },
+  {
+    id: 'nya',
+    name: 'Nya-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'ニャ', romaji: 'nya' },
+      { kana: 'ニュ', romaji: 'nyu' },
+      { kana: 'ニョ', romaji: 'nyo' }
+    ]
+  },
+  {
+    id: 'hya',
+    name: 'Hya-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'ヒャ', romaji: 'hya' },
+      { kana: 'ヒュ', romaji: 'hyu' },
+      { kana: 'ヒョ', romaji: 'hyo' }
+    ]
+  },
+  {
+    id: 'mya',
+    name: 'Mya-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'ミャ', romaji: 'mya' },
+      { kana: 'ミュ', romaji: 'myu' },
+      { kana: 'ミョ', romaji: 'myo' }
+    ]
+  },
+  {
+    id: 'rya',
+    name: 'Rya-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'リャ', romaji: 'rya' },
+      { kana: 'リュ', romaji: 'ryu' },
+      { kana: 'リョ', romaji: 'ryo' }
+    ]
+  },
+  {
+    id: 'gya',
+    name: 'Gya-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'ギャ', romaji: 'gya' },
+      { kana: 'ギュ', romaji: 'gyu' },
+      { kana: 'ギョ', romaji: 'gyo' }
+    ]
+  },
+  {
+    id: 'ja',
+    name: 'Ja-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'ジャ', romaji: 'ja' },
+      { kana: 'ジュ', romaji: 'ju' },
+      { kana: 'ジョ', romaji: 'jo' }
+    ]
+  },
+  {
+    id: 'bya',
+    name: 'Bya-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'ビャ', romaji: 'bya' },
+      { kana: 'ビュ', romaji: 'byu' },
+      { kana: 'ビョ', romaji: 'byo' }
+    ]
+  },
+  {
+    id: 'pya',
+    name: 'Pya-row',
+    category: 'yoon',
+    characters: [
+      { kana: 'ピャ', romaji: 'pya' },
+      { kana: 'ピュ', romaji: 'pyu' },
+      { kana: 'ピョ', romaji: 'pyo' }
+    ]
+  }
+];
+
 // Attach row metadata to each character for easy lookup
 HIRAGANA_ROWS.forEach(row => {
   row.characters.forEach(char => {
     char.rowId = row.id;
     char.rowName = row.name;
     char.category = row.category;
+    char.script = 'hiragana';
+  });
+});
+
+KATAKANA_ROWS.forEach(row => {
+  row.characters.forEach(char => {
+    char.rowId = row.id;
+    char.rowName = row.name;
+    char.category = row.category;
+    char.script = 'katakana';
   });
 });
 
 /**
- * Get all Hiragana characters flattened into a single list
+ * Get rows for a specific script ('hiragana' | 'katakana')
  */
-export function getAllCharacters() {
-  return HIRAGANA_ROWS.flatMap(row => row.characters);
+export function getRowsByScript(script = 'hiragana') {
+  return script === 'katakana' ? KATAKANA_ROWS : HIRAGANA_ROWS;
+}
+
+/**
+ * Get all characters for a script flattened into a single list
+ */
+export function getAllCharacters(script = 'hiragana') {
+  return getRowsByScript(script).flatMap(row => row.characters);
 }
 
 /**
@@ -330,11 +643,11 @@ export function getBasicRowIds() {
 }
 
 /**
- * Get characters filtered by an array or Set of selected row IDs
+ * Get characters filtered by an array or Set of selected row IDs for a given script
  */
-export function getCharactersByRowIds(selectedRowIds) {
+export function getCharactersByRowIds(selectedRowIds, script = 'hiragana') {
   const rowIdSet = new Set(selectedRowIds);
-  return HIRAGANA_ROWS
+  return getRowsByScript(script)
     .filter(row => rowIdSet.has(row.id))
     .flatMap(row => row.characters);
 }

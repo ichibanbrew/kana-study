@@ -143,6 +143,54 @@ body {
   white-space: nowrap;
 }
 
+/* Segmented Script Switcher (Hiragana / Katakana) */
+.script-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 0.18rem;
+  gap: 0.15rem;
+}
+
+.script-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.script-tab:hover:not(.active) {
+  color: var(--text-primary);
+}
+
+.script-tab.active {
+  background: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.script-char {
+  font-family: var(--font-japanese);
+  font-weight: 700;
+  font-size: 0.92rem;
+  line-height: 1;
+}
+
+.script-name-short {
+  display: none;
+}
+
 .header-controls {
   display: flex;
   align-items: center;
@@ -714,12 +762,15 @@ body {
     gap: 0.45rem;
   }
 
+  .desktop-brand-title,
   .brand-icon {
-    font-size: 1.4rem;
+    display: none;
   }
 
-  .brand h1 {
-    font-size: 1.05rem;
+  .script-tab {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.78rem;
+    gap: 0.25rem;
   }
 
   .header-controls {
@@ -831,12 +882,17 @@ body {
     padding: 0.45rem 0.45rem;
   }
 
-  .brand-sub {
+  .script-name-full {
     display: none;
   }
 
-  .brand h1 {
-    font-size: 0.95rem;
+  .script-name-short {
+    display: inline;
+  }
+
+  .script-tab {
+    padding: 0.22rem 0.45rem;
+    font-size: 0.74rem;
   }
 
   .btn-text-part-mobile {

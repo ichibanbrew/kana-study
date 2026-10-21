@@ -6,8 +6,14 @@ const STORAGE_KEY = 'hiragana_study_state_v1';
  * Get initial default state
  */
 export function getDefaultState() {
+  const basicRows = getBasicRowIds();
   return {
-    selectedRowIds: getBasicRowIds(),
+    script: 'hiragana', // 'hiragana' | 'katakana'
+    selectedRowIds: [...basicRows],
+    selectedRowsByScript: {
+      hiragana: [...basicRows],
+      katakana: [...basicRows]
+    },
     stats: {
       answered: 0,
       correct: 0,
@@ -25,7 +31,7 @@ export function getDefaultState() {
   };
 }
 
-class StateManager {
+export class StateManager {
   constructor() {
     this.state = this.load();
     this.listeners = [];
@@ -38,9 +44,17 @@ class StateManager {
         if (saved) {
           const parsed = JSON.parse(saved);
           const defaults = getDefaultState();
+          const script = parsed.script === 'katakana' ? 'katakana' : 'hiragana';
+          const selectedRowsByScript = {
+            hiragana: parsed.selectedRowsByScript?.hiragana || parsed.selectedRowIds || defaults.selectedRowsByScript.hiragana,
+            katakana: parsed.selectedRowsByScript?.katakana || defaults.selectedRowsByScript.katakana
+          };
           return {
             ...defaults,
             ...parsed,
+            script,
+            selectedRowsByScript,
+            selectedRowIds: selectedRowsByScript[script],
             settings: { ...defaults.settings, ...parsed.settings },
             stats: { ...defaults.stats, ...parsed.stats },
             mistakes: parsed.mistakes || {}
@@ -75,25 +89,55 @@ class StateManager {
     this.listeners.forEach(fn => fn(this.state));
   }
 
+  // Script selection methods ('hiragana' | 'katakana')
+  getScript() {
+    return this.state.script || 'hiragana';
+  }
+
+  setScript(script) {
+    if (script !== 'hiragana' && script !== 'katakana') return;
+    this.state.script = script;
+    if (!this.state.selectedRowsByScript) {
+      this.state.selectedRowsByScript = {
+        hiragana: getBasicRowIds(),
+        katakana: getBasicRowIds()
+      };
+    }
+    this.state.selectedRowIds = this.state.selectedRowsByScript[script];
+    this.save();
+  }
+
   // Row selection methods
   getSelectedRowIds() {
+    const script = this.getScript();
+    if (this.state.selectedRowsByScript && this.state.selectedRowsByScript[script]) {
+      return this.state.selectedRowsByScript[script];
+    }
     return this.state.selectedRowIds;
   }
 
   setSelectedRowIds(rowIds) {
-    this.state.selectedRowIds = Array.from(new Set(rowIds));
+    const uniqueIds = Array.from(new Set(rowIds));
+    const script = this.getScript();
+    if (!this.state.selectedRowsByScript) {
+      this.state.selectedRowsByScript = {
+        hiragana: getBasicRowIds(),
+        katakana: getBasicRowIds()
+      };
+    }
+    this.state.selectedRowsByScript[script] = uniqueIds;
+    this.state.selectedRowIds = uniqueIds;
     this.save();
   }
 
   toggleRow(rowId) {
-    const current = new Set(this.state.selectedRowIds);
+    const current = new Set(this.getSelectedRowIds());
     if (current.has(rowId)) {
       current.delete(rowId);
     } else {
       current.add(rowId);
     }
-    this.state.selectedRowIds = Array.from(current);
-    this.save();
+    this.setSelectedRowIds(Array.from(current));
   }
 
   // Stats methods

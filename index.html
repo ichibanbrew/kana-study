@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Japanese Hiragana Practice - 5-Choice Study</title>
-  <meta name="description" content="Learn Japanese Hiragana with custom row selection and 5-choice multiple-choice quizzes.">
+  <title>Japanese Kana Practice - Hiragana & Katakana Study</title>
+  <meta name="description" content="Learn Japanese Hiragana and Katakana with custom row selection and 5-choice multiple-choice quizzes.">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>あ</text></svg>">
 </head>
@@ -12,9 +12,23 @@
   <!-- Application Header -->
   <header class="app-header">
     <div class="brand">
-      <div class="brand-icon">あ</div>
-      <div class="brand-title-wrap">
-        <h1>Hiragana <span class="brand-sub">Study</span></h1>
+      <div class="brand-icon" id="brand-icon">あ</div>
+      <div class="brand-title-wrap desktop-brand-title">
+        <h1>Kana <span class="brand-sub">Study</span></h1>
+      </div>
+
+      <!-- Segmented Script Switcher (Hiragana / Katakana) -->
+      <div class="script-switcher" role="group" aria-label="Select Kana Script">
+        <button id="btn-script-hiragana" class="script-tab active" data-script="hiragana" aria-pressed="true">
+          <span class="script-char">あ</span>
+          <span class="script-name-full">Hiragana</span>
+          <span class="script-name-short">Hira</span>
+        </button>
+        <button id="btn-script-katakana" class="script-tab" data-script="katakana" aria-pressed="false">
+          <span class="script-char">ア</span>
+          <span class="script-name-full">Katakana</span>
+          <span class="script-name-short">Kata</span>
+        </button>
       </div>
     </div>
 
