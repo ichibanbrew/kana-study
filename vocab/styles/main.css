@@ -837,8 +837,7 @@ html[data-touch="true"] .audio-btn:focus:not(:focus-visible) {
   }
 }
 
-.vocab-table tbody th,
-.vocab-table tbody td {
+.vocab-table :where(tbody th, tbody td) {
   padding: 0.8rem 1.15rem;
   border-bottom: 1px solid var(--border-color);
   vertical-align: middle;
@@ -926,10 +925,7 @@ html[data-touch="true"] .audio-btn:focus:not(:focus-visible) {
 /* Container Query: Stacked Layout for Narrow Table Containers */
 @container (width < 560px) {
   .vocab-table,
-  .vocab-table tbody,
-  .vocab-table tr,
-  .vocab-table th,
-  .vocab-table td {
+  .vocab-table :where(tbody, tr, th, td) {
     display: block;
     width: 100%;
   }
@@ -948,8 +944,7 @@ html[data-touch="true"] .audio-btn:focus:not(:focus-visible) {
     border-bottom: none;
   }
 
-  .vocab-table tbody th,
-  .vocab-table tbody td {
+  .vocab-table :where(tbody th, tbody td) {
     padding: 0;
     border-bottom: none;
   }
@@ -995,6 +990,7 @@ html[data-touch="true"] .audio-btn:focus:not(:focus-visible) {
     position: absolute;
     top: 0.7rem;
     right: 0.75rem;
+    left: auto;
     width: auto;
   }
 }

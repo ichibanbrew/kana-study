@@ -117,3 +117,17 @@ test('vocab/index.html contains every DOM element ID referenced by VocabUI', () 
     );
   }
 });
+
+test('vocab/styles/main.css uses :where() for table cell resets so .cell-audio width/alignment are not overridden', () => {
+  const cssPath = path.join(__dirname, '..', 'styles', 'main.css');
+  const css = fs.readFileSync(cssPath, 'utf8');
+
+  assert.ok(
+    css.includes('.vocab-table :where(tbody, tr, th, td)'),
+    'Stacked container query should use :where() so .cell-audio width: auto is not overridden'
+  );
+  assert.ok(
+    !css.includes('.vocab-table td {\n    display: block;\n    width: 100%;'),
+    'Must not use high-specificity .vocab-table td width: 100% reset'
+  );
+});
