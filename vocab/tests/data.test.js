@@ -48,6 +48,7 @@ test('vocabulary.json parses cleanly and satisfies required schema', () => {
 
   assert.ok(seenChapters.has(1), 'Chapter 1 must exist');
   assert.ok(seenChapters.has(2), 'Chapter 2 must exist');
+  assert.ok(seenChapters.has(3), 'Chapter 3 must exist');
 });
 
 test('normalizeVocabularyData rejects malformed input', () => {
@@ -84,12 +85,13 @@ test('filterWords filters by chapter and search query across kana, kanji, and en
 });
 
 test('groupWordsByChapter groups words in ascending chapter order', () => {
-  const { words } = normalizeVocabularyData(rawVocabData);
+  const { words, chapters } = normalizeVocabularyData(rawVocabData);
   const grouped = groupWordsByChapter(words);
 
-  assert.equal(grouped.length, 2);
-  assert.equal(grouped[0].chapter, 1);
-  assert.equal(grouped[1].chapter, 2);
+  assert.equal(grouped.length, chapters.length);
+  for (let i = 1; i < grouped.length; i += 1) {
+    assert.ok(grouped[i].chapter > grouped[i - 1].chapter, 'Chapters must be sorted ascending');
+  }
 });
 
 test('formatSpeechText strips textbook wave-dash placeholders cleanly', () => {
