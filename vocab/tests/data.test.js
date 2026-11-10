@@ -49,6 +49,8 @@ test('vocabulary.json parses cleanly and satisfies required schema', () => {
   assert.ok(seenChapters.has(1), 'Chapter 1 must exist');
   assert.ok(seenChapters.has(2), 'Chapter 2 must exist');
   assert.ok(seenChapters.has(3), 'Chapter 3 must exist');
+  assert.ok(seenChapters.has(4), 'Chapter 4 must exist');
+  assert.ok(seenChapters.has(5), 'Chapter 5 must exist');
 });
 
 test('normalizeVocabularyData rejects malformed input', () => {
