@@ -25,7 +25,8 @@ const MIME_TYPES = {
 
 const server = http.createServer((req, res) => {
   // Normalize URL and prevent directory traversal
-  let safePath = path.normalize(decodeURIComponent(req.url.split('?')[0]));
+  const [rawPath, queryString] = req.url.split('?');
+  let safePath = path.normalize(decodeURIComponent(rawPath));
   if (safePath === '/' || safePath === '') {
     safePath = '/index.html';
   }
@@ -39,14 +40,8 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  fs.stat(filePath, (err, stats) => {
-    if (err || !stats.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      res.end('404 Not Found');
-      return;
-    }
-
-    const ext = path.extname(filePath).toLowerCase();
+  const serveFile = (targetPath) => {
+    const ext = path.extname(targetPath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
     res.writeHead(200, {
@@ -56,8 +51,44 @@ const server = http.createServer((req, res) => {
       'Expires': '0'
     });
 
-    const stream = fs.createReadStream(filePath);
+    const stream = fs.createReadStream(targetPath);
     stream.pipe(res);
+  };
+
+  fs.stat(filePath, (err, stats) => {
+    if (err) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('404 Not Found');
+      return;
+    }
+
+    if (stats.isDirectory()) {
+      if (!rawPath.endsWith('/')) {
+        const redirectLocation = queryString ? `${rawPath}/?${queryString}` : `${rawPath}/`;
+        res.writeHead(301, { Location: redirectLocation });
+        res.end();
+        return;
+      }
+
+      const indexFilePath = path.join(filePath, 'index.html');
+      fs.stat(indexFilePath, (indexErr, indexStats) => {
+        if (indexErr || !indexStats.isFile()) {
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('404 Not Found');
+          return;
+        }
+        serveFile(indexFilePath);
+      });
+      return;
+    }
+
+    if (!stats.isFile()) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('404 Not Found');
+      return;
+    }
+
+    serveFile(filePath);
   });
 });
 

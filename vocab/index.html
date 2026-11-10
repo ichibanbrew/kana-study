@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Minna no Nihongo Vocabulary Study</title>
+  <meta name="description" content="Japanese vocabulary flashcards and chapter word lists for Minna no Nihongo.">
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>語</text></svg>">
+</head>
+<body>
+  <!-- Sticky Application Header -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">語</span>
+      <div class="brand-title-wrap">
+        <h1>Vocab <span class="brand-sub">Study</span></h1>
+      </div>
+    </div>
+
+    <!-- Primary Section Navigation (Flashcards | All Words) -->
+    <nav class="section-nav" aria-label="Primary sections">
+      <a href="#flashcards" id="nav-flashcards" class="nav-tab active" aria-current="page">
+        <span class="nav-icon" aria-hidden="true">🗂️</span>
+        <span class="nav-label-full">Flashcards</span>
+        <span class="nav-label-short">Cards</span>
+      </a>
+      <a href="#vocabulary" id="nav-vocabulary" class="nav-tab">
+        <span class="nav-icon" aria-hidden="true">📖</span>
+        <span class="nav-label-full">All Vocabulary</span>
+        <span class="nav-label-short">Words</span>
+      </a>
+    </nav>
+
+    <div class="header-controls">
+      <button type="button" id="btn-toggle-theme" class="btn-icon" title="Toggle Light/Dark Theme" aria-label="Toggle Light/Dark Theme">
+        ☀️
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="app-container">
+    <!-- Loading / Error Banner -->
+    <div id="status-banner" class="status-banner" hidden role="status" aria-live="polite"></div>
+
+    <!-- ===================================================================
+         SECTION 1: FLASHCARD PAGE
+         =================================================================== -->
+    <section id="view-flashcards" class="view-section" aria-label="Vocabulary Flashcards">
+      <!-- Flashcard Controls Toolbar -->
+      <div class="toolbar flashcard-toolbar">
+        <!-- Direction Switcher: JP -> EN | EN -> JP -->
+        <div class="segmented-control" role="group" aria-label="Flashcard direction">
+          <button type="button" id="btn-dir-jp-en" class="segment-btn active" aria-pressed="true">
+            <span class="dir-flag" lang="ja">あ</span>
+            <span>JP → EN</span>
+          </button>
+          <button type="button" id="btn-dir-en-jp" class="segment-btn" aria-pressed="false">
+            <span class="dir-flag">A</span>
+            <span>EN → JP</span>
+          </button>
+        </div>
+
+        <div class="toolbar-right">
+          <label for="flashcard-chapter-select" class="sr-only">Select Chapter</label>
+          <select id="flashcard-chapter-select" class="chapter-select" aria-label="Filter flashcards by chapter">
+            <option value="all">All Chapters</option>
+          </select>
+
+          <button type="button" id="btn-shuffle" class="btn-pill" title="Randomize cards (S)" aria-label="Randomize flashcards">
+            <span aria-hidden="true">🔀</span>
+            <span class="btn-shuffle-text">Shuffle</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Flashcard -->
+      <div class="flashcard-stage">
+        <div id="flashcard-surface" class="flashcard" role="region" aria-label="Current flashcard">
+          <div class="card-top-bar">
+            <div class="card-meta">
+              <span id="card-chapter-badge" class="chapter-badge">Chapter 1</span>
+              <span id="card-progress" class="card-progress">1 / 1</span>
+            </div>
+
+            <button
+              type="button"
+              id="btn-card-speak"
+              class="audio-btn"
+              title="Pronounce Japanese word"
+              aria-label="Pronounce Japanese word"
+            >
+              🔊
+            </button>
+          </div>
+
+          <!-- Prompt (Front) -->
+          <div id="card-prompt" class="card-prompt">
+            <!-- Populated dynamically based on JP->EN or EN->JP -->
+          </div>
+
+          <!-- Divider & Answer (Revealed Area) -->
+          <div id="card-answer-wrap" class="card-answer-wrap" hidden>
+            <div class="card-divider" aria-hidden="true"></div>
+            <div id="card-answer" class="card-answer" aria-live="polite">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <div id="card-tap-hint" class="card-tap-hint">
+            Click card or press Space to reveal meaning
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation & Reveal Controls -->
+      <div class="flashcard-actions">
+        <button type="button" id="btn-prev-card" class="btn-nav" aria-label="Previous flashcard">
+          <span aria-hidden="true">←</span>
+          <span>Prev</span>
+        </button>
+
+        <button type="button" id="btn-reveal-card" class="btn-reveal primary" aria-expanded="false">
+          Reveal Meaning
+        </button>
+
+        <button type="button" id="btn-next-card" class="btn-nav" aria-label="Next flashcard">
+          <span>Next</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <!-- Keyboard Shortcuts Legend (Desktop) -->
+      <div class="shortcuts-footer" aria-hidden="true">
+        <span>Shortcuts:</span>
+        <kbd class="kbd-key">Space</kbd>
+        <span>reveal</span>
+        <span class="sep">·</span>
+        <kbd class="kbd-key">←</kbd>
+        <kbd class="kbd-key">→</kbd>
+        <span>prev / next</span>
+        <span class="sep">·</span>
+        <kbd class="kbd-key">S</kbd>
+        <span>shuffle</span>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 2: VIEW ALL VOCABULARY PAGE
+         =================================================================== -->
+    <section id="view-vocabulary" class="view-section" hidden aria-label="All Vocabulary Items">
+      <!-- Vocabulary Filter Toolbar -->
+      <div class="toolbar list-toolbar">
+        <div class="list-filters">
+          <label for="list-chapter-select" class="sr-only">Filter by Chapter</label>
+          <select id="list-chapter-select" class="chapter-select" aria-label="Filter vocabulary list by chapter">
+            <option value="all">All Chapters</option>
+          </select>
+
+          <div class="search-box">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <label for="list-search-input" class="sr-only">Search vocabulary</label>
+            <input
+              type="search"
+              id="list-search-input"
+              class="search-input"
+              placeholder="Search kana, kanji, or English…"
+              autocomplete="off"
+            >
+          </div>
+        </div>
+
+        <div class="list-summary">
+          <span id="list-word-count" class="word-count-badge">0 words</span>
+        </div>
+      </div>
+
+      <!-- Chapter-Grouped Vocabulary Tables -->
+      <div id="vocabulary-chapters-container" class="chapters-container">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
